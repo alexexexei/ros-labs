@@ -19,7 +19,7 @@
 
             <!-- aluminium => pi * 0.06^2 * 0.04 * 2699 -->
             <xacro:inertial_cylinder mass="1.22" length="0.04" radius="0.06">
-                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 1.57"/>
             </xacro:inertial_cylinder>
         </link>
 
