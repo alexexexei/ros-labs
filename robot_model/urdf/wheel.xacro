@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="wheel" params="side x y z color parent">
+        <link name='wheel_${side}'>
+            <visual name='wheel_${side}_visual'>
+                <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 1.57"/>
+                <geometry>
+                    <cylinder length="0.04" radius="0.06"/>
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 1.57"/>
+                <geometry>
+                    <cylinder length="0.04" radius="0.06"/>
+                </geometry>
+            </collision>
+
+            <!-- aluminium => pi * 0.06^2 * 0.04 * 2699 -->
+            <xacro:inertial_cylinder mass="1.22" length="0.04" radius="0.06">
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            </xacro:inertial_cylinder>
+        </link>
+
+        <joint name="wheel_${side}_joint" type="continuous">
+            <origin xyz="${x} ${y} ${z}" rpy="0.0 0.0 0.0"/>
+
+            <limit effort="100" velocity="100"/>
+            <joint_properties damping="0.0" friction="0.0"/>
+            
+            <child link="wheel_${side}"/>
+            <parent link="${parent}"/>
+        </joint>
+    </xacro:macro>
+</robot>
