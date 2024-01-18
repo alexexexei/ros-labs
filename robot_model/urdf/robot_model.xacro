@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find robot_model)/urdf/wheel.xacro" />
+    <xacro:include filename="$(find robot_model)/urdf/materials.xacro" />
+    <xacro:include filename="$(find robot_model)/urdf/inertial.urdf.xacro"/>
+    <xacro:include filename="$(find robot_model)/urdf/manipulator.xacro"/>
+
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <link name='base_link'>
+        <visual name='base_visual'>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.2 0.14 0.09"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+
+        <collision name="base_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="0.2 0.14 0.09" />
+            </geometry>
+        </collision>
+
+        <!-- aluminium => 2699 * 0.2 * 0.14 * 0.09 -->
+        <xacro:inertial_box mass="6.8" x="0.2" y="0.14" z="0.09">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <xacro:wheel side="left" x="0.12" y="0.0" z="-0.045" color="blue" parent="base_link"/>
+    <xacro:wheel side="right" x="-0.12" y="0.0" z="-0.045" color="blue" parent="base_link"/>
+
+    <xacro:mpart pnum="1" x="0.0" y="0.0" z="0.045" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="blue" parent="base_link"/>
+    <xacro:mpart pnum="2" x="0.0" y="0.0" z="0.1" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="blue" parent="mpart_1"/>
+    <xacro:mpart pnum="3" x="0.0" y="0.0" z="0.1" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="blue" parent="mpart_2"/>
+    <xacro:mpart pnum="4" x="0.0" y="0.0" z="0.1" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="blue" parent="mpart_3"/>
+</robot>
