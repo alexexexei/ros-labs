@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="mpart" params="pnum x y z rx ry rz ax ay az phi color parent">
+        <link name='mpart_${pnum}'>
+            <visual name='mpart_${pnum}_visual'>
+                <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.02"/>
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.02"/>
+                </geometry>
+            </collision>
+
+            <!-- aluminium => pi * 0.02^2 * 0.1 * 2699 -->
+            <xacro:inertial_cylinder mass="0.34" length="0.1" radius="0.02">
+                <origin xyz="0.0 0.0 0.05" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+        </link>
+
+        <joint name="mpart_${pnum}__${parent}_joint" type="revolute">
+            <origin xyz="${x} ${y} ${z}" rpy="${rx} ${ry} ${rz}"/>
+            <axis xyz="${ax} ${ay} ${az}"/>
+
+            <limit lower="-${phi}" upper="${phi}" effort="1000" velocity="0.5"/>
+            <joint_properties damping="0.0" friction="0.0"/>
+            
+            <child link="mpart_${pnum}"/>
+            <parent link="${parent}"/>
+        </joint>
+    </xacro:macro>
+</robot>
