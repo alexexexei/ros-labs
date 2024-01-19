@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="camera" params="x y z rx ry rz color parent">
+        <link name='camera'>
+            <visual name='camera_visual'>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size=".02 .02 .02"/>
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size=".02 .02 .02"/>
+                </geometry>
+            </collision>
+
+            <!-- plastic => 1400 * 0.02^3 -->
+            <xacro:inertial_box mass="0.0112" x=".02" y=".02" z=".02">
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            </xacro:inertial_box>
+        </link>
+    
+        <joint type="fixed" name="${parent}__camera_joint">
+            <origin xyz="${x} ${y} ${z}" rpy="${rx} ${ry} ${rz}"/>
+            <child link="camera"/>
+            <parent link="${parent}"/>
+        </joint>
+    </xacro:macro>
+</robot>
