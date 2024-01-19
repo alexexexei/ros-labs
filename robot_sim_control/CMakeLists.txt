@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(my_robot_simulation_control)
+project(robot_sim_control)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES my_robot_simulation_control
+#  LIBRARIES robot_sim_control
 #  CATKIN_DEPENDS rospy std_msgs
 #  DEPENDS system_lib
 )
