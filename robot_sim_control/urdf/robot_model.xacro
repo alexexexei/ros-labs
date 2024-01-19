@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find robot_sim_control)/urdf/wheel.xacro" />
+    <xacro:include filename="$(find robot_sim_control)/urdf/sphere_wheel.xacro"/>
+    <xacro:include filename="$(find robot_sim_control)/urdf/materials.xacro" />
+    <xacro:include filename="$(find robot_sim_control)/urdf/inertial.urdf.xacro"/>
+    <xacro:include filename="$(find robot_sim_control)/urdf/platform.xacro" />
+    <xacro:include filename="$(find robot_sim_control)/urdf/manipulator.xacro"/>
+    <xacro:include filename="$(find robot_sim_control)/urdf/camera.xacro"/>
+    <xacro:include filename="$(find robot_sim_control)/urdf/lidar.xacro"/>
+    <xacro:include filename="$(find robot_sim_control)/urdf/robot_model.gazebo"/>
+
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <link name='base_link'>
+        <visual name='base_visual'>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.2 0.14 0.09"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+
+        <collision name="base_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="0.2 0.14 0.09" />
+            </geometry>
+        </collision>
+
+        <!-- steel => 7900 * 0.2 * 0.14 * 0.09 -->
+        <xacro:inertial_box mass="19.908" x="0.2" y="0.14" z="0.09">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <xacro:wheel side="left" x="0.12" y="0.0" z="-0.025" rx="0.0" ry="0.0" rz="0.0" color="white" parent="base_link"/>
+    <xacro:wheel side="right" x="-0.12" y="0.0" z="-0.025" rx="0.0" ry="0.0" rz="0.0" color="white" parent="base_link"/>
+    <xacro:sphere_wheel side="back_left" x="0.06" y="-0.07" z="-0.055" rx="0.0" ry="0.0" rz="0.0" color="white" parent="base_link"/>
+    <xacro:sphere_wheel side="back_right" x="-0.06" y="-0.07" z="-0.055" rx="0.0" ry="0.0" rz="0.0" color="white" parent="base_link"/>
+    <xacro:sphere_wheel side="front_center" x="0.0" y="0.07" z="-0.055" rx="0.0" ry="0.0" rz="0.0" color="white" parent="base_link"/>
+
+    <xacro:camera x="0.0" y="0.07" z="0.0" rx="0.0" ry="0.0" rz="1.570796" color="white" parent="base_link"/>
+    <xacro:lidar x="0.0" y="0.05" z="0.05" rx="0.0" ry="0.0" rz="1.570796" color="white" parent="base_link"/>
+
+    <xacro:platform side="up_center" x="0.0" y="0.0" z="0.045" rx="0.0" ry="0.0" rz="0.0" ax="0" ay="0" az="1" color="white" parent="base_link"/>
+    <xacro:mpart pnum="first" x="0.0" y="0.0" z="0.03" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="white" parent="platform_up_center"/>
+    <xacro:mpart pnum="second" x="0.0" y="0.0" z="0.1" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="white" parent="mpart_first"/>
+    <xacro:mpart pnum="third" x="0.0" y="0.0" z="0.1" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="white" parent="mpart_second"/>
+    <xacro:mpart pnum="fourth" x="0.0" y="0.0" z="0.1" rx="0.0" ry="0.0" rz="0.0" ax="1" ay="0" az="0" phi="0.75" color="white" parent="mpart_third"/>
+
+    <transmission name="wheel_left_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wheel_left_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="left_motor">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="wheel_right_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wheel_right_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="right_motor">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+</robot>
