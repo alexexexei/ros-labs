@@ -1,0 +1,17 @@
+diffrobot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Velocity Controllers ---------------------------------------
+  # parameter d makes the robot shake
+  wheel_left_controller:
+    type: effort_controllers/JointVelocityController
+    joint: wheel_left_joint
+    pid: {p: 1.0, i: 0.01, d: 0.0}
+    
+  wheel_right_controller:
+    type: effort_controllers/JointVelocityController
+    joint: wheel_right_joint
+    pid: {p: 1.0, i: 0.01, d: 0.0}
