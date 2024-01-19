@@ -1,0 +1,46 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="sphere_wheel" params="side x y z rx ry rz color parent">
+        <link name="sphere_wheel_${side}">
+            <collision name='caster_collision'>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <sphere radius="0.03" />
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>0</mu>
+                            <mu2>0</mu2>
+                            <slip1>1.0</slip1>
+                            <slip2>1.0</slip2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+
+            <!-- aluminium => 4/3 * pi * 0.03^3 * 2699 -->
+            <xacro:inertial_sphere mass="0.31" radius="0.03">
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            </xacro:inertial_sphere>
+
+            <visual name='caster_visual'>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <sphere radius="0.03" />
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+        </link>
+
+        <joint name="sphere_wheel_${side}_joint" type="continuous">
+            <origin xyz="${x} ${y} ${z}" rpy="${rx} ${ry} ${rz}"/>
+
+            <limit effort="100" velocity="100"/>
+            <joint_properties damping="0.0" friction="0.0"/>
+            
+            <child link="sphere_wheel_${side}"/>
+            <parent link="${parent}"/>
+        </joint>
+    </xacro:macro>
+</robot>
