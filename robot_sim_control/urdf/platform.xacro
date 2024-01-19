@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="platform" params="side x y z rx ry rz ax ay az color parent">
+        <link name='platform_${side}'>
+            <visual name='platform_${side}_visual'>
+                <origin xyz="0.0 0.0 0.015" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder length="0.03" radius="0.03"/>
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.0 0.0 0.015" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder length="0.03" radius="0.03"/>
+                </geometry>
+            </collision>
+
+            <!-- steel => pi * 0.03^2 * 0.03 * 7900 -->
+            <xacro:inertial_cylinder mass="0.67" length="0.03" radius="0.03">
+                <origin xyz="0.0 0.0 0.015" rpy="0.0 0.0 0.0"/>
+            </xacro:inertial_cylinder>
+        </link>
+
+        <joint name="platform_${side}_joint" type="continuous">
+            <origin xyz="${x} ${y} ${z}" rpy="${rx} ${ry} ${rz}"/>
+            <axis xyz="${ax} ${ay} ${az}"/>
+
+            <limit effort="500" velocity="0.5"/>
+            <joint_properties damping="0.0" friction="0.0"/>
+            
+            <child link="platform_${side}"/>
+            <parent link="${parent}"/>
+        </joint>
+    </xacro:macro>
+</robot>
