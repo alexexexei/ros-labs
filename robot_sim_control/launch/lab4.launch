@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <!-- <arg name="gui" default="False" />
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+    <param name="use_gui" value="$(arg gui)"/> -->
+    <param name="robot_description" command="xacro '$(find robot_sim_control)/urdf/robot_model.xacro'"/>
+    <rosparam file="$(find robot_sim_control)/launch/diff_control.yaml" command="load"/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="40.0"/>
+    </node>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find robot_sim_control)/worlds/empty.world"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <node name="robot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -param robot_description -model robot_model" />
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/diffrobot" args="wheel_left_controller wheel_right_controller joint_state_controller --timeout 60"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_sim_control)/launch/rviz-cfg.rviz" output="screen"/>
+    <node name="sensor_data_proc" pkg="robot_sim_control" type="sensor_data_processor.py" output="screen"/>
+</launch>
