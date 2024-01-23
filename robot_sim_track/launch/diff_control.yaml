@@ -1,0 +1,15 @@
+joint_state_controller:
+  type                   : "diff_drive_controller/DiffDriveController"
+  wheel_left_controller  : 'wheel_left_joint'
+  wheel_right_controller : 'wheel_right_joint'
+  publish_rate: 50
+
+  # rosDebugLevel: "info"
+  # publishWheelTF: false
+  # publishOdomTF: true
+  # publishWheelJointState: true
+  # wheelAcceleration: 0.0
+  # odometrySource: "world"
+
+  # maxWheelTorque: 100.0
+  # maxHingeVelocity: 50.0

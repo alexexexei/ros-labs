@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_sim_track)/launch/rviz-cfg.rviz" output="screen"/> -->
+  <!-- <arg name="gui" default="False" />
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <param name="use_gui" value="$(arg gui)"/> -->
+  
+  <param name="robot_description" command="xacro '$(find robot_sim_track)/models/diff_drive_robot/urdf/diff_drive_robot.xacro'"/>
+
+  <rosparam file="$(find robot_sim_track)/launch/diff_control.yaml" command="load"/>
+  
+  <!-- Robot pose -->
+  <arg name="x" default="0"/>
+  <arg name="y" default="0"/>
+  <arg name="z" default="0.2"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="40.0" />
+  </node>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find robot_sim_track)/worlds/simple_scene.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+  
+  <node name="diff_drive_robot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model diff_drive_robot -x $(arg x) -y $(arg y) -z $(arg z)" respawn="false"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/diff_drive_robot" args="wheel_left_controller wheel_right_controller joint_state_controller --timeout 15"/>
+
+  <node name="katafalk_runner" pkg="robot_sim_track" type="katafalk.py" output="screen"/>
+</launch>
