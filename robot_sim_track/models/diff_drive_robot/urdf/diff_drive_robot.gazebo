@@ -15,7 +15,6 @@
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_link</robotBaseFrame>
-      <num_wheel_pairs>2</num_wheel_pairs>
     </plugin>
   </gazebo>
 
