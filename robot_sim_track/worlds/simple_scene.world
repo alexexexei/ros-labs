@@ -89,7 +89,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/kseikoff/catkin_ws/src/robot_sim_track/models/project_2023.dae</uri>
+              <uri>/home/kseikoff/catkin_ws/src/robot_sim_track/models/track_2024.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -105,7 +105,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/kseikoff/catkin_ws/src/robot_sim_track/models/project_2023.dae</uri>
+              <uri>/home/kseikoff/catkin_ws/src/robot_sim_track/models/track_2024.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
