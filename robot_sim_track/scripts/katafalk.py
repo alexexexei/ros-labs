@@ -25,10 +25,8 @@ class LidarDataHandler:
     def lidar_cb(self, data1, data2):
         ranges1 = data1.ranges
         ranges2 = data2.ranges
-
         min_1 = min(ranges1)
         min_2 =  min(ranges2)
-
         if (abs(min_1 - min_2) < 0.1):
             self.publish_wheel_command(0.5, 0, 0, 0, 0, 0.0)
             rospy.loginfo("for")
