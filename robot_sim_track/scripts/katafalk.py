@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-import numpy as np
 import rospy
 import message_filters
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 
-min_range = 0.01
-max_range = 2.0
 delta_min = 0.1
 delta_max = 0.5
 
