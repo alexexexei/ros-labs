@@ -29,13 +29,13 @@ class LidarDataHandler:
         min_2 =  min(ranges2)
         if (abs(min_1 - min_2) < 0.1):
             self.publish_wheel_command(0.5, 0, 0, 0, 0, 0.0)
-            rospy.loginfo("for")
+            rospy.loginfo("going straight")
         elif    min_1 < min_2:
             self.publish_wheel_command(0.25, 0, 0, 0, 0, -1.5)
-            rospy.loginfo("left")
+            rospy.loginfo("turning right")
         else:
             self.publish_wheel_command(0.25, 0, 0, 0, 0, 1.5) 
-            rospy.loginfo("right")   
+            rospy.loginfo("turning left")   
         
     def publish_wheel_command(self, x, y, z, ax, ay, az):
         twist_msg = Twist()
